@@ -1,0 +1,13 @@
+form {
+    border: 5px solid greenyellow;
+    padding: 20px;
+    width: 30%;
+}
+form > input {
+    margin-bottom: 10px;
+}
+.err{
+    background: red;
+    color: white;
+    margin-bottom: 10px;
+}
