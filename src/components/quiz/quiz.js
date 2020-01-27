@@ -58,7 +58,7 @@ class Quiz extends Component {
         let key = localStorage.getItem("auth-key")
         let body = {"points" : points}
         if (key){
-            fetch("http://localhost:5000/api/client/send-result",{
+            fetch("https://quiz-app-v1.herokuapp.com/api/client/send-result",{
                 method : "POST",
                 headers : {
                     'Accept': 'application/json',

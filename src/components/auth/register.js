@@ -51,7 +51,8 @@ class Register extends Component {
             teamName : this.state.teamName,
             password : this.state.passWord
         }
-        fetch("http://localhost:5000/api/client/login",{
+        
+        fetch("https://quiz-app-v1.herokuapp.com/api/client/login",{
             method : "POST",
             headers : {
                 'Accept': 'application/json',

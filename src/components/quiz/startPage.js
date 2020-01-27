@@ -52,7 +52,7 @@ class StartPage extends Component {
     getAllQuestions = (key) => {
         let token = key
         if(token){
-            fetch("http://localhost:5000/api/client/get-quiz-questions",{
+            fetch("https://quiz-app-v1.herokuapp.com/api/client/get-quiz-questions",{
                 method : "GET",
                 headers : {
                     'Accept': 'application/json',
