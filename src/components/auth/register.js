@@ -9,8 +9,8 @@ class Register extends Component {
         super(props)
         this.state = {
             email : "",
-            quizName : "sample2",
-            teamName : "sample2",
+            quizName : "",
+            teamName : "",
             passWord : "",
             isRegisted : false,
             errMsg : "",
@@ -44,12 +44,11 @@ class Register extends Component {
 
     // register new user in db 
     registerUser = () => {
-        console.log("reg")
         const newUser = {
             email : this.state.email,
-            quizName : this.state.quizName,
             teamName : this.state.teamName,
-            password : this.state.passWord
+            password : this.state.passWord,
+            quizName : this.state.quizName,
         }
         
         fetch("https://quiz-app-v1.herokuapp.com/api/client/login",{
@@ -158,7 +157,7 @@ class Register extends Component {
      
         return (
             <div>
-                <form>
+                <form className="reg">
                     <span className="err">{err}</span>
                     <br />
                     <input type="text" placeholder="enter your email" 

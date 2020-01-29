@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+// component 
 import FirstPage from '../firstPage'
 
 class Quiz extends Component {
@@ -17,6 +19,7 @@ class Quiz extends Component {
         this.points = {}
     }
 
+    // get's all the prop's from start component 
     componentDidMount = () => {
         let questions = this.props.allQuestions
         let quizName = this.props.quizName
@@ -30,6 +33,7 @@ class Quiz extends Component {
         }
     }
 
+    // update's the point object 
     updatePoints = (event) => {
         event.preventDefault()
         let option = event.target.getAttribute('option')
@@ -37,24 +41,28 @@ class Quiz extends Component {
         let id = event.target.getAttribute("_id")
         if (option === ans){
             this.points[id] = 1
+        }else{
+            this.points[id] = 0
         }
     }
 
     // submit-answer 
     submit = (event) =>{    
+        console.log('obj',this.points)
         event.preventDefault()
         let totalPoints = Object.values(this.points)
-        console.log(totalPoints)
+        console.log('points',totalPoints)
         let res = 0
         for(let i=0;i<totalPoints.length;i++){
             res += totalPoints[i]
         }
-        this.sendResult(res)
+        this.sendResult(res)  
     }
 
     // send result to db 
-    sendResult = (finalPoints) => {
-        let points = finalPoints
+    sendResult = (res) => {
+        let points = res
+        console.log('send points',points)
         let key = localStorage.getItem("auth-key")
         let body = {"points" : points}
         if (key){
@@ -71,7 +79,7 @@ class Quiz extends Component {
             .then(res => res.json())
             .then(data => {
                 if (data.msg){
-                    alert(data)
+                    alert(data.msg)
                     this.setState({
                         submit : true
                     })
@@ -79,7 +87,7 @@ class Quiz extends Component {
                 if (data.error){
                     alert(data.error)
                 }
-
+                this.deleteKey()
             })
             .catch(err => {
                 if(err){
@@ -89,6 +97,17 @@ class Quiz extends Component {
         }
     }
 
+    // delete auth-key from localstorage 
+    deleteKey = () =>{
+        if (this.state.submit){
+            let key = localStorage.getItem("auth-key")
+            if(key){
+                localStorage.removeItem("auth-key")
+            }else{
+                localStorage.removeItem("auth-key")
+            }
+        }
+    }
 
     render() {
         console.log(this.state.allQuestions)
@@ -96,19 +115,22 @@ class Quiz extends Component {
             return(
                 <div key={key}>
                     <h3>{q.question.ques}</h3>
+                    <form>
                     {q.question.options.map((op,key) => {
                         return(
-                            <div key={key}>
+                            <React.Fragment>
                                 <input type="radio" 
+                                key={key}
                                 _id={q._id}
                                 name="options"
                                 value={op.optionAns}
                                 option={op.option}
                                 ans={q.question.answer}
                                 onChange={this.updatePoints}/>{op.optionAns}
-                            </div>
+                            </React.Fragment>
                         )
                     })}
+                    </form>
                 </div>
             )
         })

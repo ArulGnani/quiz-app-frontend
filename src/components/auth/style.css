@@ -1,9 +1,9 @@
-form {
+.reg {
     border: 5px solid greenyellow;
     padding: 20px;
     width: 30%;
 }
-form > input {
+.reg > input {
     margin-bottom: 10px;
 }
 .err{
