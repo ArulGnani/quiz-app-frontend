@@ -86,7 +86,7 @@ class Quiz extends Component {
                 }
                 if (data.error){
                     swal(data.error,"don't submit again!..","warning")
-                    alert(data.error)
+                    // alert(data.error)
                 }
                 this.deleteKey()
             })
