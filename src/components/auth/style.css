@@ -1,13 +1,44 @@
 .reg {
     border: 5px solid greenyellow;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px rgb(166, 224, 79);
+    background: greenyellow;
     padding: 20px;
     width: 30%;
+    margin: auto;
+    display: grid;
+    align-items: center;
+    margin-top: 7%;
 }
 .reg > input {
     margin-bottom: 10px;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px solid rgb(75, 90, 53);
+    border-radius: 5px;
+    font-family: 'Cambay', sans-serif;
+}
+.reg-submit-btn{
+    padding: 10px 20px;
+    border: none;
+    background: rgb(141, 153, 124);
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    transition: background 1s ease-in-out;
+    font-family: 'Cambay', sans-serif;
+}
+.reg-submit-btn:hover{
+    background: white;
+    color: rgb(22, 26, 18);
 }
 .err{
     background: red;
     color: white;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Cambay', sans-serif;
 }

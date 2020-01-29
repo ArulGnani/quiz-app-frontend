@@ -1,6 +1,116 @@
 .box{
-    border: 2px solid yellowgreen;
+    border-radius: 5px;
+    background: greenyellow;
     width: 40%;
     padding: 20px;
     text-align: center;
+    margin: auto;
+    margin-top: 10%;
+    box-shadow: 10px 10px 20px rgb(150, 218, 49);
+}
+
+.quiz-name{
+    font-size: 25px;
+    padding: 10px;
+    font-weight: 800;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.team-name{
+    padding: 10px;
+    font-size: 22px;
+    font-weight: 800;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.start-btn{
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: rgb(90, 110, 58);
+    transition: background 1s ease-in-out;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-family: 'Work Sans', sans-serif;
+}
+.start-btn:hover{
+    background: white;
+    color: rgb(90, 110, 58);
+}
+
+/* quiz-box */
+.main-quiz-container{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas: "timer quiz-box submit-container";
+}
+
+
+.quiz-box{
+    grid-area: quiz-box;
+    width: 100%;
+    background: rgb(173, 187, 152);
+    margin: auto;
+}
+
+.question-container{
+    padding: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+    transition: border 1s ease-in-out;
+}
+
+.question-container:hover{
+    border-left: 3px solid greenyellow;
+    background: rgb(194, 214, 174);
+}
+
+.question{
+    margin-left: 5px;
+    font-size: 25px;
+    font-weight: 600;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.options{
+    margin-left: 10px;
+}
+.option{
+    margin-right: 5px;
+}
+.option-ans{
+    font-size: 18px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    margin-right: 20px;
+}
+.submit-container{
+    grid-area: submit-container;
+
+}
+.submit-btn{
+    position: fixed;
+    margin-top: 15px;
+    background: rgb(115, 138, 93);
+    padding: 10px 20px;
+    border: 2px solid rgb(115, 138, 93);
+    margin-left: 3%;
+    margin-right: 10px;
+    font-size: 18px;
+    font-size: 500;
+    transition: background 1s ease-in-out;
+    border-radius: 3px;
+}
+.submit-btn:hover{
+    background: white;
+    color: rgb(84, 97, 66);
+}
+
+.timer{
+    grid-area: timer;
+}
+
+.timer > h1{
+    margin-left: 5%;
+    position: fixed;
 }

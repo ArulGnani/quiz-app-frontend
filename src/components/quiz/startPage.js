@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import swal from 'sweetalert';
 // component 
 import Quiz from './quiz'
 // css 
@@ -29,6 +29,7 @@ class StartPage extends Component {
 
     // start the quiz 
     startQuiz = () => {
+        swal("are you sure...","can't revert once in","info")
         let key = this.checkForKey()
         if (key){
             if (this.state.isStart === false){
@@ -38,7 +39,7 @@ class StartPage extends Component {
                 })
                 this.getAllQuestions(key)
             }else{
-                alert("pls wait!...")
+                swal("pls wait...")
             }
         }else{
             console.log("not authorized")
@@ -114,9 +115,11 @@ class StartPage extends Component {
         }
         return (
             <div className="box">
-                <h3>quiz-name : {this.state.quizName}</h3>
-                <h4>team-name : {this.state.teamName}</h4>
-                <button onClick={this.startQuiz}>start quiz</button>
+                <h2 className="quiz-name">quiz-name : {this.state.quizName}</h2>
+                <h3 className="team-name">team-name : {this.state.teamName}</h3>
+                <button onClick={this.startQuiz} className="start-btn">
+                    start quiz
+                </button>
             </div>
         )
     }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 // component 
 import StartPage from "../quiz/startPage"
+import swal from 'sweetalert';
 // custom css
 import './style.css'
+
 
 class Register extends Component {
     constructor(props){
@@ -35,7 +37,7 @@ class Register extends Component {
         if (verified !== true){
             this.setErrMsg(verified)
         }else{
-            if (this.state.isClicked === false){
+            if (this.state.isClicked === false && this.state.loading === false){
                 this.registerUser()
                 this.resetErrMsg()
             }
@@ -79,6 +81,7 @@ class Register extends Component {
         .catch(err => {
             if (err){
                 let e = "somthing went wrong!..."
+                swal(e,"error")
                 this.setErrMsg(e)
             }
         }) 
@@ -144,7 +147,8 @@ class Register extends Component {
     render() {
         let err = this.state.errMsg
         if(this.state.loading){
-            alert("loading pls wait!...")
+            alert("loading pls wait...")
+            // swal("loading pls wait....")
         }
         if (this.state.isRegisted){
             return (
@@ -176,7 +180,7 @@ class Register extends Component {
                     value={this.state.password} onChange={this.handelChange}
                     name="passWord"/>
                     <br />
-                    <button onClick={this.submit}>submit</button>
+                    <button onClick={this.submit} className="reg-submit-btn">submit</button>
                 </form>
             </div>
         )

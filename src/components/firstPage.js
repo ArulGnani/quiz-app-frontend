@@ -21,15 +21,6 @@ class FirstPage extends Component {
     }
 
     render() {
-        if(this.state.finished){
-            return(
-                <div>
-                    <h1>finished</h1>
-                </div>
-            )
-        }
-
-
         return (
             <div>
                 <Register />

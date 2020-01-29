@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import swal from 'sweetalert'
 // component 
 import FirstPage from '../firstPage'
 
@@ -48,10 +48,9 @@ class Quiz extends Component {
 
     // submit-answer 
     submit = (event) =>{    
-        console.log('obj',this.points)
         event.preventDefault()
         let totalPoints = Object.values(this.points)
-        console.log('points',totalPoints)
+        // console.log('points',totalPoints)
         let res = 0
         for(let i=0;i<totalPoints.length;i++){
             res += totalPoints[i]
@@ -79,19 +78,22 @@ class Quiz extends Component {
             .then(res => res.json())
             .then(data => {
                 if (data.msg){
-                    alert(data.msg)
+                    swal(data.msg,"your result has been submited","success")
+                    // alert(data.msg)
                     this.setState({
                         submit : true
                     })
                 }
                 if (data.error){
+                    swal(data.error,"don't submit again!..","warning")
                     alert(data.error)
                 }
                 this.deleteKey()
             })
             .catch(err => {
                 if(err){
-                    alert("something went wrong!...")
+                    swal("something went wrong!..","pls inform the incharge","error")
+                    // alert("something went wrong!...")
                 }
             })
         }
@@ -113,9 +115,9 @@ class Quiz extends Component {
         console.log(this.state.allQuestions)
         let questions = this.state.allQuestions.map((q,key) => {
             return(
-                <div key={key}>
-                    <h3>{q.question.ques}</h3>
-                    <form>
+                <div key={key} className="question-container">
+                    <h3 className="question">{key + 1} : {q.question.ques}</h3>
+                    <form className="options">
                     {q.question.options.map((op,key) => {
                         return(
                             <React.Fragment>
@@ -126,7 +128,8 @@ class Quiz extends Component {
                                 value={op.optionAns}
                                 option={op.option}
                                 ans={q.question.answer}
-                                onChange={this.updatePoints}/>{op.optionAns}
+                                onChange={this.updatePoints}
+                                className="option"/><span className="option-ans">{op.optionAns}</span>
                             </React.Fragment>
                         )
                     })}
@@ -144,9 +147,18 @@ class Quiz extends Component {
         }
 
         return (
-            <div>
-                {questions}     
-                <button onClick={this.submit}>submit answers</button>           
+            <div className="main-quiz-container">
+                <div className="quiz-box">
+                    {questions}     
+                </div>
+                <div className="timer">
+                    <h1>00:40:10</h1>
+                </div>
+                <div className="submit-container">
+                    <button onClick={this.submit} className="submit-btn">
+                        submit answers
+                    </button>
+                </div>           
             </div>
         )
     }
