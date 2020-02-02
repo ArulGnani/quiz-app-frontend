@@ -1,1 +1,1 @@
-URL : https://gracious-snyder-371350.netlify.com/
+URL : https://quiz-v1.netlify.com/
