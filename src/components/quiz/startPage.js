@@ -45,11 +45,12 @@ class StartPage extends Component {
             })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if(data.status){
                     if (data.status === "-"){
                         swal("pls wait quiz is not started....")
                     }
-                    if (data.status === "true"){
+                    if (data.status === "started"){
                         swal("quiz has started!....")
                         this.setState({
                             isStart : true,
@@ -59,7 +60,7 @@ class StartPage extends Component {
                         })
                         this.getAllQuestions()
                     }
-                    if (data.status === "false"){
+                    if (data.status === "finished"){
                         swal("quiz finished!...")
                     }
                 }else{
@@ -90,6 +91,7 @@ class StartPage extends Component {
             .then(res => res.json())
             .then(data =>{
                 if (!data.err){
+                    console.log(data)
                     this.setState({
                         allQuestions : [...data]
                     })
