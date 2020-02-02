@@ -14,7 +14,9 @@ class StartPage extends Component {
             quizName : "",
             teamName : "",
             err : "",
-            loading : false
+            loading : false,
+            stopTime : "",
+            timer : 0
         }
     }
 
@@ -29,20 +31,43 @@ class StartPage extends Component {
 
     // start the quiz 
     startQuiz = () => {
-        swal("are you sure...","can't revert once in","info")
         let key = this.checkForKey()
+        // console.log(key)
         if (key){
-            if (this.state.isStart === false){
-                this.setState({
-                    isStart : true,
-                    loading : true
-                })
-                this.getAllQuestions(key)
-            }else{
-                swal("pls wait...")
-            }
+            fetch("https://quiz-app-v1.herokuapp.com/api/client/start-quiz",{
+                method : "GET",
+                headers : {
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': true,
+                    'Content-Type': 'application/json',                
+                    "auth-key" : key
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status){
+                    if (data.status === "-"){
+                        swal("pls wait quiz is not started....")
+                    }
+                    if (data.status === "true"){
+                        swal("quiz has started!....")
+                        this.setState({
+                            isStart : true,
+                            loading : true,
+                            stopTime : data.stopTime,
+                            timer : data.time
+                        })
+                        this.getAllQuestions()
+                    }
+                    if (data.status === "false"){
+                        swal("quiz finished!...")
+                    }
+                }else{
+                    swal("wait!..")
+                }
+            })
         }else{
-            console.log("not authorized")
+            // console.log("not authorized")
             this.setState({
                 isStart : false
             })
@@ -50,16 +75,16 @@ class StartPage extends Component {
     }
 
     // get-all-question 
-    getAllQuestions = (key) => {
-        let token = key
-        if(token){
+    getAllQuestions = () => {
+        let key = this.checkForKey()
+        if(key){
             fetch("https://quiz-app-v1.herokuapp.com/api/client/get-quiz-questions",{
                 method : "GET",
                 headers : {
                     'Accept': 'application/json',
                     'Access-Control-Allow-Origin': true,
                     'Content-Type': 'application/json',                
-                    "auth-key" : token
+                    "auth-key" : key
                 }
             })
             .then(res => res.json())
@@ -109,7 +134,8 @@ class StartPage extends Component {
                 <div>
                     <Quiz allQuestions={this.state.allQuestions}
                     quizName={this.state.quizName}
-                    teamName={this.state.teamName}/>
+                    teamName={this.state.teamName}
+                    timer={this.state.timer}/>
                 </div>
             )
         }

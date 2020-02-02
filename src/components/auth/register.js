@@ -13,7 +13,6 @@ class Register extends Component {
             email : "",
             quizName : "",
             teamName : "",
-            passWord : "",
             isRegisted : false,
             errMsg : "",
             loading : false,
@@ -49,8 +48,7 @@ class Register extends Component {
         const newUser = {
             email : this.state.email,
             teamName : this.state.teamName,
-            password : this.state.passWord,
-            quizName : this.state.quizName,
+            quizName : this.state.quizName
         }
         
         fetch("https://quiz-app-v1.herokuapp.com/api/client/login",{
@@ -102,12 +100,10 @@ class Register extends Component {
     // client-side validation 
     verifyInput = () => {
         if (this.state.email === "" || this.state.quizName === "" ||
-        this.state.teamName === "" || this.state.passWord === ""){
+        this.state.teamName === ""){
             return "all fields are required!..."
         }else if(this.state.email.length < 5){
             return "enter an valid email!..."
-        }else if(this.state.passWord.length < 8){
-            return "password should be min 8 char"
         }else if(this.state.quizName.length < 3){
             return "quizName should be min 5 char"
         }else if(this.state.teamName.length < 5){
@@ -161,6 +157,9 @@ class Register extends Component {
      
         return (
             <div>
+                <div className="clg-name">
+                    <h1>HICAS</h1>
+                </div>
                 <form className="reg">
                     <span className="err">{err}</span>
                     <br />
@@ -175,10 +174,6 @@ class Register extends Component {
                     <input type="text" placeholder="enter ur quiz name"
                     value={this.state.quizName} onChange={this.handelChange}
                     name="quizName"/>
-                    <br />
-                    <input type="password" placeholder="enter ur password"
-                    value={this.state.password} onChange={this.handelChange}
-                    name="passWord"/>
                     <br />
                     <button onClick={this.submit} className="reg-submit-btn">submit</button>
                 </form>

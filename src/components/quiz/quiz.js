@@ -14,7 +14,10 @@ class Quiz extends Component {
             endTime : "",
             finalPoints : 0,
             points : {},
-            submit : false
+            submit : false,
+            timer : "00:00",
+            time: 0,
+            intervalID : "" 
         }
         this.points = {}
     }
@@ -24,14 +27,49 @@ class Quiz extends Component {
         let questions = this.props.allQuestions
         let quizName = this.props.quizName
         let teamName = this.props.teamName
+        let timer = this.props.timer
         if (questions && quizName && teamName){
             this.setState({
                 allQuestions : questions,
                 quizName : quizName,
-                teamName : teamName
+                teamName : teamName, 
+                time : timer
             })
         }
+        this.startTimer()
     }
+
+    // start timer 
+    startTimer = () => {
+        var timer = setInterval(() => {
+            if (this.time !== 0){
+                this.setState({
+                    time : this.state.time - 1
+                })        
+                let min = Math.floor(this.state.time / 60)
+                let sec = this.state.time - min * 60
+                min = min < 10 ? "0" + min : min
+                sec = sec < 10 ? "0" + sec : sec
+                this.setState({
+                    timer : `${min}:${sec}`
+                })
+            }else{
+                // clearInterval(timer)
+                this.stopTimer()
+                swal("ur out of time!...")
+                this.submit()
+            }
+        },1000)
+        this.setState({
+            intervalID : timer
+        })
+    }
+
+    // stop-timer
+    stopTimer = () => {
+        clearInterval(this.state.intervalID)
+    }
+
 
     // update's the point object 
     updatePoints = (event) => {
@@ -55,13 +93,15 @@ class Quiz extends Component {
         for(let i=0;i<totalPoints.length;i++){
             res += totalPoints[i]
         }
+        // clearInterval(this.state.intervalID)
+        this.stopTimer()
         this.sendResult(res)  
     }
 
     // send result to db 
     sendResult = (res) => {
         let points = res
-        console.log('send points',points)
+        // console.log('send points',points)
         let key = localStorage.getItem("auth-key")
         let body = {"points" : points}
         if (key){
@@ -86,7 +126,7 @@ class Quiz extends Component {
                 }
                 if (data.error){
                     swal(data.error,"don't submit again!..","warning")
-                    // alert(data.error)
+                    // alert(data.error)  
                 }
                 this.deleteKey()
             })
@@ -112,7 +152,7 @@ class Quiz extends Component {
     }
 
     render() {
-        console.log(this.state.allQuestions)
+        // console.log(this.state.allQuestions)
         let questions = this.state.allQuestions.map((q,key) => {
             return(
                 <div key={key} className="question-container">
@@ -152,7 +192,7 @@ class Quiz extends Component {
                     {questions}     
                 </div>
                 <div className="timer">
-                    <h1>00:40:10</h1>
+                    <h1>{this.state.timer}</h1>
                 </div>
                 <div className="submit-container">
                     <button onClick={this.submit} className="submit-btn">

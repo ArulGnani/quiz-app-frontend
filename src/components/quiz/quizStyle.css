@@ -1,12 +1,12 @@
 .box{
     border-radius: 5px;
-    background: greenyellow;
+    background: linear-gradient(to right, #aaffa9, #11ffbd);
     width: 40%;
     padding: 20px;
     text-align: center;
     margin: auto;
     margin-top: 10%;
-    box-shadow: 10px 10px 20px rgb(150, 218, 49);
+    box-shadow: 10px 10px 20px rgb(100, 158, 141);
 }
 
 .quiz-name{
@@ -26,7 +26,7 @@
 .start-btn{
     padding: 10px 20px;
     border-radius: 5px;
-    background: rgb(90, 110, 58);
+    background: rgb(34, 46, 42);
     transition: background 1s ease-in-out;
     border: none;
     color: white;
@@ -49,7 +49,7 @@
 .quiz-box{
     grid-area: quiz-box;
     width: 100%;
-    background: rgb(173, 187, 152);
+    background: rgb(241, 252, 248);
     margin: auto;
 }
 
@@ -61,8 +61,8 @@
 }
 
 .question-container:hover{
-    border-left: 3px solid greenyellow;
-    background: rgb(194, 214, 174);
+    border-left: 3px solid rgb(47, 255, 158);
+    background: rgba(201, 247, 221, 0.74);
 }
 
 .question{
@@ -91,9 +91,9 @@
 .submit-btn{
     position: fixed;
     margin-top: 15px;
-    background: rgb(115, 138, 93);
+    background:  #11ffbd;
     padding: 10px 20px;
-    border: 2px solid rgb(115, 138, 93);
+    border: 2px solid #11ffbd;
     margin-left: 3%;
     margin-right: 10px;
     font-size: 18px;
@@ -103,11 +103,12 @@
 }
 .submit-btn:hover{
     background: white;
-    color: rgb(84, 97, 66);
+    color: #3f504b;
 }
 
 .timer{
     grid-area: timer;
+    font-size: 20px;
 }
 
 .timer > h1{
