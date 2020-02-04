@@ -99,10 +99,11 @@ class Register extends Component {
 
     // client-side validation 
     verifyInput = () => {
+        let validEmail = this.validEmailId(this.state.email)
         if (this.state.email === "" || this.state.quizName === "" ||
         this.state.teamName === ""){
             return "all fields are required!..."
-        }else if(this.state.email.length < 5){
+        }else if(this.state.email.length < 5 || validEmail === false){
             return "enter an valid email!..."
         }else if(this.state.quizName.length < 3){
             return "quizName should be min 5 char"
@@ -111,6 +112,12 @@ class Register extends Component {
         }else {
             return true
         }
+    }
+
+    // check for valid email id 
+    validEmailId = (email) => {
+        let reg =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return reg.test(String(email).toLowerCase())
     }
 
     // reset whole state 
@@ -156,9 +163,10 @@ class Register extends Component {
         }
      
         return (
-            <div>
-                <div className="clg-name">
-                    <h1>HICAS</h1>
+            <div className="main-bg">
+                <div className="logo-bg">
+                    <img src={require('./logo.png')} alt="logo" width="500px"
+                    className="logo"/>
                 </div>
                 <form className="reg">
                     <span className="err">{err}</span>
@@ -167,15 +175,15 @@ class Register extends Component {
                     value={this.state.email} onChange={this.handelChange}
                     name="email"/>
                     <br />
-                    <input type="text" placeholder="enter ur teamname"
+                    <input type="text" placeholder="enter your teamname"
                     value={this.state.teamName} onChange={this.handelChange}
                     name="teamName"/>
                     <br />
-                    <input type="text" placeholder="enter ur quiz name"
+                    <input type="text" placeholder="enter your quiz name"
                     value={this.state.quizName} onChange={this.handelChange}
                     name="quizName"/>
                     <br />
-                    <button onClick={this.submit} className="reg-submit-btn">submit</button>
+                    <button onClick={this.submit} className="reg-submit-btn">register</button>
                 </form>
             </div>
         )

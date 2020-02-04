@@ -42,7 +42,7 @@ class Quiz extends Component {
     // start timer 
     startTimer = () => {
         var timer = setInterval(() => {
-            if (this.time !== 0){
+            if (this.state.time !== 0){
                 this.setState({
                     time : this.state.time - 1
                 })        
@@ -56,7 +56,7 @@ class Quiz extends Component {
             }else{
                 // clearInterval(timer)
                 this.stopTimer()
-                swal("ur out of time!...")
+                swal("your out of time!...")
                 this.submit()
             }
         },1000)
@@ -86,7 +86,7 @@ class Quiz extends Component {
 
     // submit-answer 
     submit = (event) =>{    
-        event.preventDefault()
+        // event.preventDefault()
         let totalPoints = Object.values(this.points)
         // console.log('points',totalPoints)
         let res = 0
@@ -189,7 +189,7 @@ class Quiz extends Component {
         return (
             <div className="main-quiz-container">
                 <div className="quiz-box">
-                    {questions}     
+                    {questions}
                 </div>
                 <div className="timer">
                     <h1>{this.state.timer}</h1>

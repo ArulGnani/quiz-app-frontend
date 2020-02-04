@@ -45,7 +45,7 @@ class StartPage extends Component {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if(data.status){
                     if (data.status === "-"){
                         swal("pls wait quiz is not started....")
@@ -91,7 +91,7 @@ class StartPage extends Component {
             .then(res => res.json())
             .then(data =>{
                 if (!data.err){
-                    console.log(data)
+                    // console.log(data)
                     this.setState({
                         allQuestions : [...data]
                     })
@@ -142,12 +142,17 @@ class StartPage extends Component {
             )
         }
         return (
-            <div className="box">
-                <h2 className="quiz-name">quiz-name : {this.state.quizName}</h2>
-                <h3 className="team-name">team-name : {this.state.teamName}</h3>
-                <button onClick={this.startQuiz} className="start-btn">
-                    start quiz
-                </button>
+            <div className="start-main">
+                <div className="img-box">
+                        <img src={require("../auth/logo.png")} width="500px"/>
+                    </div>
+                <div className="box">
+                    <h2 className="quiz-name">quiz-name : {this.state.quizName}</h2>
+                    <h3 className="team-name">team-name : {this.state.teamName}</h3>
+                    <button onClick={this.startQuiz} className="start-btn">
+                        start quiz
+                    </button>
+                </div>
             </div>
         )
     }

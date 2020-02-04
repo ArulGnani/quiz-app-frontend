@@ -1,22 +1,40 @@
-.clg-name{
-    text-align: center;
-    font-style: italic;
-    font-size: 25px;
-    font-weight: 600;
+*{
     margin: 0;
+    padding: 0;
+}
+.main-bg{
+    background-image: url('./bg.png');
+    background-position: center;
+    height: 100vh;
+}
+.logo{
+    display: block;
+    margin: auto;
 }
 
 .reg {
     /* border: 5px solid greenyellow; */
     border-radius: 10px;
-    box-shadow: 10px 10px 20px rgb(129, 240, 197);
-    background: linear-gradient(to right, #aaffa9, #11ffbd);
+    box-shadow: 10px 10px 20px rgb(168, 146, 247);
+    background: linear-gradient(316.25deg, #6C63FF 2.96%, #8E54E9 96.36%);
     padding: 20px;
     width: 30%;
     margin: auto;
     display: grid;
     align-items: center;
-    margin-top: 2%;
+    margin-top: 5%;
+    animation-name: fade-in;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
 .reg > input {
@@ -31,13 +49,14 @@
 .reg-submit-btn{
     padding: 10px 20px;
     border: none;
-    background: rgb(78, 133, 104);
+    background: rgb(165, 118, 240);
     font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
     transition: background 1s ease-in-out;
     font-family: 'Cambay', sans-serif;
     margin-bottom: 10px;
+    color: whitesmoke;
 }
 .reg-submit-btn:hover{
     background: white;
@@ -51,4 +70,5 @@
     text-align: center;
     font-weight: 600;
     font-family: 'Cambay', sans-serif;
+    border-radius: 5px;
 }

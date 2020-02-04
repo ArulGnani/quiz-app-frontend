@@ -1,14 +1,34 @@
 .box{
     border-radius: 5px;
-    background: linear-gradient(to right, #aaffa9, #11ffbd);
+    background: linear-gradient(316.25deg, #6C63FF 2.96%, #8E54E9 96.36%);
     width: 40%;
     padding: 20px;
     text-align: center;
     margin: auto;
-    margin-top: 10%;
-    box-shadow: 10px 10px 20px rgb(100, 158, 141);
+    margin-top: 3%;
+    box-shadow: 10px 10px 20px rgb(168, 146, 247);
+    animation-name: fade-in;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+}
+/* fade in animation  */
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
+.img-box > img{
+    display: block;
+    margin: auto;
+    margin-top: 3%;
+}
 .quiz-name{
     font-size: 25px;
     padding: 10px;
@@ -21,6 +41,7 @@
     font-size: 22px;
     font-weight: 800;
     font-family: 'Work Sans', sans-serif;
+    margin-top: 10px;
 }
 
 .start-btn{
@@ -32,6 +53,7 @@
     color: white;
     font-size: 18px;
     font-family: 'Work Sans', sans-serif;
+    margin-top: 10px;
 }
 .start-btn:hover{
     background: white;
@@ -42,14 +64,19 @@
 .main-quiz-container{
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr auto;
     grid-template-areas: "timer quiz-box submit-container";
 }
 
-
+.quiz-logo{
+    grid-area: "logo";
+    position: fixed;
+    margin-left: 40px;
+}
 .quiz-box{
     grid-area: quiz-box;
     width: 100%;
-    background: rgb(241, 252, 248);
+    background: rgb(249, 240, 253);
     margin: auto;
 }
 
@@ -61,8 +88,8 @@
 }
 
 .question-container:hover{
-    border-left: 3px solid rgb(47, 255, 158);
-    background: rgba(201, 247, 221, 0.74);
+    border-left: 3px solid rgb(123, 89, 248);
+    background: rgb(224, 217, 250);
 }
 
 .question{
@@ -70,6 +97,7 @@
     font-size: 25px;
     font-weight: 600;
     font-family: 'Work Sans', sans-serif;
+    margin-bottom: 10px;
 }
 
 .options{
@@ -91,19 +119,19 @@
 .submit-btn{
     position: fixed;
     margin-top: 15px;
-    background:  #11ffbd;
+    background:  rgb(168, 146, 247);
     padding: 10px 20px;
-    border: 2px solid #11ffbd;
+    border: 2px solid rgb(168, 146, 247);
     margin-left: 3%;
     margin-right: 10px;
     font-size: 18px;
     font-size: 500;
     transition: background 1s ease-in-out;
     border-radius: 3px;
+    margin-top: 3%;
 }
 .submit-btn:hover{
     background: white;
-    color: #3f504b;
 }
 
 .timer{
@@ -112,6 +140,8 @@
 }
 
 .timer > h1{
-    margin-left: 5%;
+    margin-top: 2%;
+    margin-left: 3%;
     position: fixed;
+    font-size: 4rem;
 }
