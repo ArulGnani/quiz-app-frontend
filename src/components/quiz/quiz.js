@@ -1,207 +1,78 @@
-import React, { Component } from 'react'
-import swal from 'sweetalert'
-// component 
-import FirstPage from '../firstPage'
+import React, { useState, useEffect } from 'react'
+import Timer from './timer'
+import Questions from './questions'
+import Submit from './submit'
+import _404 from '../404-page/404'
+import './style/quiz.css'
 
-class Quiz extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            allQuestions : [],
-            teamName : "",
-            quizName : "",
-            startTime : "",
-            endTime : "",
-            finalPoints : 0,
-            points : {},
-            submit : false,
-            timer : "00:00",
-            time: 0,
-            intervalID : "" 
+const Quiz = () => {
+    const [auth,setAuth] = useState(false)
+    const [allQuestions,setAllQuestions] = useState([]) 
+    const [timer,setTimer] = useState(0)
+    const [answers,setAnswers] = useState({})
+    const [yourAnswers,setYourAnswers] = useState({})
+    const [intervalId,setIntervaId] = useState("")
+    const [submit,setSubmit] = useState(false)
+    const [quizName,setQuizNama] = useState("")
+    const [loading,setLoading] = useState(false)
+
+    useEffect(() => {
+        let questions = JSON.parse(sessionStorage.getItem("questions"))
+        let timer = JSON.parse(sessionStorage.getItem("timer"))
+        let key = "key" in sessionStorage
+        let state = JSON.parse(sessionStorage.getItem("state"))
+        if (questions && timer && key && state) {
+            setAuth(true)
+            setAllQuestions([...questions])
+            setTimer(timer)
+            setQuizNama(state.quizName)
         }
-        this.points = {}
-    }
+    },[])
 
-    // get's all the prop's from start component 
-    componentDidMount = () => {
-        let questions = this.props.allQuestions
-        let quizName = this.props.quizName
-        let teamName = this.props.teamName
-        let timer = this.props.timer
-        if (questions && quizName && teamName){
-            this.setState({
-                allQuestions : questions,
-                quizName : quizName,
-                teamName : teamName, 
-                time : timer
-            })
-        }
-        this.startTimer()
-    }
+    // prop method's
+    const updateAnswer = (obj) => setAnswers(state => ({...state,...obj}))
+    const updateYourAnswers = (obj) => setYourAnswers(state => ({...state,...obj}))
+    const stopTimerProp = (id) => clearInterval(id)
+    const setIntervaIdProp = (id) => setIntervaId(id)
+    const setSubmitProp = () => setSubmit(true)
+    const setLoadingProp = () => setLoading(true)
+    const resetLoadingProp = () => setLoading(false)
+  
+    if (!auth) return( <_404/> )
 
-    // start timer 
-    startTimer = () => {
-        var timer = setInterval(() => {
-            if (this.state.time !== 0){
-                this.setState({
-                    time : this.state.time - 1
-                })        
-                let min = Math.floor(this.state.time / 60)
-                let sec = this.state.time - min * 60
-                min = min < 10 ? "0" + min : min
-                sec = sec < 10 ? "0" + sec : sec
-                this.setState({
-                    timer : `${min}:${sec}`
-                })
-            }else{
-                // clearInterval(timer)
-                this.stopTimer()
-                swal("your out of time!...")
-                this.submit()
-            }
-        },1000)
-        this.setState({
-            intervalID : timer
-        })
-    }
-
-    // stop-timer
-    stopTimer = () => {
-        clearInterval(this.state.intervalID)
-    }
-
-
-    // update's the point object 
-    updatePoints = (event) => {
-        event.preventDefault()
-        let option = event.target.getAttribute('option')
-        let ans = event.target.getAttribute('ans')
-        let id = event.target.getAttribute("_id")
-        if (option === ans){
-            this.points[id] = 1
-        }else{
-            this.points[id] = 0
-        }
-    }
-
-    // submit-answer 
-    submit = (event) =>{    
-        // event.preventDefault()
-        let totalPoints = Object.values(this.points)
-        // console.log('points',totalPoints)
-        let res = 0
-        for(let i=0;i<totalPoints.length;i++){
-            res += totalPoints[i]
-        }
-        // clearInterval(this.state.intervalID)
-        this.stopTimer()
-        this.sendResult(res)  
-    }
-
-    // send result to db 
-    sendResult = (res) => {
-        let points = res
-        // console.log('send points',points)
-        let key = localStorage.getItem("auth-key")
-        let body = {"points" : points}
-        if (key){
-            fetch("https://quiz-app-v1.herokuapp.com/api/client/send-result",{
-                method : "POST",
-                headers : {
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': true,
-                    'Content-Type': 'application/json',
-                    'auth-key' : key
-                },
-                body : JSON.stringify(body)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.msg){
-                    swal(data.msg,"your result has been submited","success")
-                    // alert(data.msg)
-                    this.setState({
-                        submit : true
-                    })
-                }
-                if (data.error){
-                    swal(data.error,"don't submit again!..","warning")
-                    // alert(data.error)  
-                }
-                this.deleteKey()
-            })
-            .catch(err => {
-                if(err){
-                    swal("something went wrong!..","pls inform the incharge","error")
-                    // alert("something went wrong!...")
-                }
-            })
-        }
-    }
-
-    // delete auth-key from localstorage 
-    deleteKey = () =>{
-        if (this.state.submit){
-            let key = localStorage.getItem("auth-key")
-            if(key){
-                localStorage.removeItem("auth-key")
-            }else{
-                localStorage.removeItem("auth-key")
-            }
-        }
-    }
-
-    render() {
-        // console.log(this.state.allQuestions)
-        let questions = this.state.allQuestions.map((q,key) => {
-            return(
-                <div key={key} className="question-container">
-                    <h3 className="question">{key + 1} : {q.question.ques}</h3>
-                    <form className="options">
-                    {q.question.options.map((op,key) => {
-                        return(
-                            <React.Fragment>
-                                <input type="radio" 
-                                key={key}
-                                _id={q._id}
-                                name="options"
-                                value={op.optionAns}
-                                option={op.option}
-                                ans={q.question.answer}
-                                onChange={this.updatePoints}
-                                className="option"/><span className="option-ans">{op.optionAns}</span>
-                            </React.Fragment>
-                        )
-                    })}
-                    </form>
-                </div>
-            )
-        })
-
-        if(this.state.submit){
-            return(
-                <div>
-                    <FirstPage submit={this.state.submit}/>
-                </div>
-            )
-        }
-
-        return (
-            <div className="main-quiz-container">
-                <div className="quiz-box">
-                    {questions}
-                </div>
-                <div className="timer">
-                    <h1>{this.state.timer}</h1>
-                </div>
-                <div className="submit-container">
-                    <button onClick={this.submit} className="submit-btn">
-                        submit answers
-                    </button>
-                </div>           
-            </div>
-        )
-    }
+    return (
+        <main id="quiz" className={loading ? "fade-bg" : ""}>
+            {loading ? <span className="loading"></span> : ""}
+            <nav id="quiz-header">
+                <Timer 
+                    timer={timer}
+                    stopTimer={stopTimerProp}
+                    intervalId={intervalId}
+                    setIntervaId={setIntervaIdProp}
+                    submit={setSubmitProp}
+                />
+                <h2 id="quiz-name">{ quizName }</h2>
+                <Submit 
+                    answers={answers}
+                    yourAnswers={yourAnswers}
+                    submit={submit}
+                    intervalId={intervalId}
+                    stopTimer={stopTimerProp}
+                    noQuestions={allQuestions.length}
+                    setLoading={setLoadingProp}
+                    resetLoading={resetLoadingProp}
+                />
+            </nav>
+            <Questions 
+                questions={allQuestions}
+                answers={answers}
+                yourAnswers={yourAnswers}
+                updateAnswer={updateAnswer}
+                updateYourAnswers={updateYourAnswers}
+            />
+        </main>
+    )
 }
 
 export default Quiz
+
