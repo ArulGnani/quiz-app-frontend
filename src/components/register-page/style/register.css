@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#login-main {
+    /* border: 2px solid rgb(185, 122, 27); */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(175, 175, 175);
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    width : 30%;
+    padding : 20px;
+    border-radius: 10px;
+    background: rgb(112, 110, 110);
+    box-shadow: 0px 10px 26px 20px rgba(116, 116, 116, 0.75);
+}
+
+#err {
+    background: rgba(219, 26, 26, 0.74);
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+
+.loading {
+    border: 5px solid rgb(255, 0, 0); 
+    border-top: 5px solid #ffffff; 
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1.5s linear infinite;
+    position: fixed;
+    top: 40%;    
+    left: 40%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.login-input {
+    border: 2px solid black;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.login-btn {
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    outline: none;
+    border: 2px solid rgb(36, 36, 36);
+    background: rgb(85, 84, 84);
+    font-weight: 500;
+    transition: background 0.5s ease;
+}
+
+.login-btn:hover {
+    background: rgb(141, 141, 141);
+}
+
+
+@media(max-width : 500px) {
+    #login-form {
+        width : 80%;
+        padding : 15px;
+    }
+
+    #err {
+        font-size: 18px;
+        font-weight: 300;
+        padding: 5px;
+    }
+
+    .login-input {
+        font-size: 18px;
+    }
+
+    .login-btn {
+        font-size: 18px;
+    }
+}
+
+.fade-bg {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

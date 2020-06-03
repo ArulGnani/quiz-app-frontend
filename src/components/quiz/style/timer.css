@@ -1,0 +1,35 @@
+
+
+#timer-comp { 
+    margin: 0;
+    padding: 20px;
+}
+#timer {
+    padding: 0;
+    margin: 0;
+    font-size: 40px;
+}
+
+@media(max-width : 500px){
+    #timer-comp { 
+        margin: 0;
+        padding: 10px;
+    }
+    #timer {
+        padding: 0;
+        margin: 0;
+        font-size: 30px;
+    }
+}
+
+@media(max-width : 300px){
+    #timer-comp { 
+        margin: 0;
+        padding: 5px;
+    }
+    #timer {
+        padding: 0;
+        margin: 0;
+        font-size: 30px;
+    }
+}

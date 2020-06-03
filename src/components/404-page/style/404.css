@@ -1,0 +1,29 @@
+
+#err-page {
+    /* border: 2px solid red; */
+    background: rgb(221, 217, 217);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#err-msg {
+    text-align: center;    
+    font-weight: 500;
+    letter-spacing: 1px;
+    animation: shake 0.52s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+#btn {
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background 0.1s ease-in-out;
+}
+
+#btn:hover {
+    background: rgb(165, 165, 165);
+}

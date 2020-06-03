@@ -1,0 +1,24 @@
+
+#submit {
+    padding: 10px;
+    font-size: 20px;
+    letter-spacing: 0.6px;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: background 0.3s ease-in;
+    margin: 10px;
+    outline: none;
+}
+
+#submit:hover {
+    background: rgb(31, 30, 30);
+    color: white;
+}
+
+@media(max-width : 500px){
+    #submit {
+        padding: 8px;
+        font-size: 18px;
+        margin: 0;
+    }
+}
