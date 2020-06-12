@@ -1,54 +1,52 @@
-import React,{ Component } from 'react'
+import React, { useContext, useRef, useEffect, useState } from 'react'
+import { QuizContext } from './quiz'
 import swal from 'sweetalert'
 import './style/timer.css'
 
-class Timer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            time : 0,
-            timer : "00:00"
-        }
-    }
+function Timer() {
+    const context = useContext(QuizContext)
+    const [timer,setTimer] = useState("")
+    const [time,setTime] = useState(0)
+    const [intervalId,setIntervalId] = useState("")
+    const timeRef = useRef()
+    timeRef.current = time
 
-    componentDidMount () {
-        if (this.props.timer) {
-            this.setState({ time : this.props.timer })
-        }
-        this.startTimer()
-    }
+    useEffect(() => {
+        setTime(context.state.time)
+        startTimer()
+    }, [])
 
-    startTimer = () => {
-        var quizTimer = setInterval(() => {
-            if (this.state.time !== 0) {
-                this.setState({time : this.state.time - 1})      
-                let min = Math.floor(this.state.time / 60)
-                let sec = this.state.time - min * 60
+    useEffect(() => { 
+        if (context.state.stopTimer) { 
+            stopTimer() 
+        } 
+    },[context.state.stopTimer])
+
+    const startTimer = () => {
+        let quizTimer = setInterval(() => {
+            if (timeRef.current !== 0) { 
+                setTime(timeRef.current - 1) 
+                let min = Math.floor(timeRef.current / 60)
+                let sec = timeRef.current - min * 60
                 min = min < 10 ? "0" + min : min
                 sec = sec < 10 ? "0" + sec : sec
-                this.setState({ timer : `${min}:${sec}`})
+                setTimer(`${min}:${sec}`)
             } else {
-                this.stopTimer()
+                stopTimer()
                 swal("your out of time!...")
-                this.props.submit()
+                context.dipatch({ type : "submit" })
             }
-            
         },1000)
-        this.props.setIntervaId(quizTimer)
+        setIntervalId(quizTimer)
     }
 
-    stopTimer () {
-        this.props.stopTimer(this.props.intervalId)
-    }
+    const stopTimer = () => clearInterval(intervalId)
 
-    render() {
-        return (
-            <div id="timer-comp">
-                <h2 id="timer">{ this.state.timer }</h2>
-            </div>
-        )
-    }
+    return (
+        <div id="timer-comp">
+            <h2 id="timer">{ timer }</h2>
+        </div>
+    )
 }
 
 export default Timer
-

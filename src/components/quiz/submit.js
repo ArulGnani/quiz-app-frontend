@@ -1,25 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Redirect } from 'react-router-dom'
 import swal from 'sweetalert'
 import './style/submit.css'
+import { QuizContext } from './quiz'
 
-const Submit = (props) => {
+function Submit () {
+    const context = useContext(QuizContext)
     const [noQuestions,setNoQuestions] = useState(0)
     const [logout,setLogout] = useState(false)
  
-    useEffect(() => { if (props.submit) submit()},[props.submit])
-    useEffect(() => { if (props.noQuestions) setNoQuestions(props.noQuestions)},[props.noQuestions])
+    useEffect(() => {
+        if (context.state.allQuestions) {
+            setNoQuestions(context.state.allQuestions.length)
+        }
+    },[context.state.allQuestions])
+
+    useEffect(() => {
+        if (context.state.submit) {
+            submit()
+        }
+    },[context.state.submit])
 
     const submit = () => {
-        props.stopTimer(props.intervalId)
-        props.setLoading()
+        context.dipatch({ type : "stopTimer" })
+        context.dipatch({ type : "loading" })
         calcPoints()
     }
 
     const calcPoints = () => {
         let points = 0
-        for (let questionId in props.yourAnswers) {
-            if (props.answers[questionId] === props.yourAnswers[questionId]) {
+        for (let questionId in context.state.yourAnswers) {
+            if (context.state.answers[questionId] === 
+                context.state.yourAnswers[questionId]) {
                 points += 1
             }
         }
@@ -27,7 +39,7 @@ const Submit = (props) => {
     }
 
     const checkForCertificate = (points) => {
-        console.log(points)
+        // console.log(points)
         let minRequirement = Math.floor(noQuestions / 2)
         if (points >= minRequirement) {
             sendPoints(points,true)
@@ -40,7 +52,7 @@ const Submit = (props) => {
         let key = JSON.parse(sessionStorage.getItem("key"))
         let res = JSON.stringify({"points" : points,"certificate" : certificate})
         if (key){
-            fetch("http://localhost:5000/api/client/send-result",{
+            fetch("https://quiz-app-v1.herokuapp.com/api/client/send-result",{
                 method : "POST",
                 headers : {
                     'Accept': 'application/json',
@@ -52,7 +64,7 @@ const Submit = (props) => {
             })
             .then(res => res.json())
             .then(data => {
-                props.setLoading()
+                context.dipatch({ type : "resetLoading" })
                 Logout()
                 if (data.error) {
                     swal("something went wrong!..","pls contact incharge","error")
@@ -61,8 +73,7 @@ const Submit = (props) => {
                 }
             })
             .catch(err => {
-                console.log(err)
-                props.setLoading()
+                context.dipatch({ type : "resetLoading" })
                 Logout()
                 swal("something went wrong!..","pls contact incharge","error")
             })

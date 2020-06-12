@@ -16,7 +16,7 @@ const StartQuizPage = () => {
     useEffect(() => {
         let state = JSON.parse(sessionStorage.getItem("state"))
         let key = "key" in sessionStorage
-        console.log(state,key) 
+        // console.log(state,key) 
         if (state && key) {
             setAuth(true)  
             setQuizName(state.quizName)
@@ -27,7 +27,7 @@ const StartQuizPage = () => {
 
     const startQuiz = async () => {
         let token = JSON.parse(sessionStorage.getItem("key"))
-        console.log(token)
+        // console.log(token)
         if (token) {
             setLoading(true)
             await fetch("https://quiz-app-v1.herokuapp.com/api/client/start-quiz",{
@@ -41,7 +41,7 @@ const StartQuizPage = () => {
             })
             .then(res => res.json())
             .then(async (data) => {
-                console.log(data)
+                // console.log(data)
                 let { status, time } = data
                 if (status === "-") swal("pls wait quiz is not started....")
                 if (status === "finished") swal("quiz finished!...")
@@ -62,7 +62,7 @@ const StartQuizPage = () => {
     }
 
     const getAllQuestions = async (token) => {
-        console.log("get all questions...")
+        // console.log("get all questions...")
         await fetch("https://quiz-app-v1.herokuapp.com/api/client/get-quiz-questions",{
             method : "GET",
             headers : {
@@ -75,7 +75,7 @@ const StartQuizPage = () => {
         .then(res => res.json())
         .then(data => {
             setLoading(false)
-            console.log(data)
+            // console.log(data)
             if (data.err) {
                 swal("something went wrong!","reload this page and try again...","error")
             }

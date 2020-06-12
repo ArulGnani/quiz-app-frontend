@@ -44,7 +44,7 @@
     #question-comp {
         /* border: 2px solid sienna; */
         width : 90%;
-        margin-top: 70px;
+        margin-top: 60px;
     }
     
     #container {
@@ -86,7 +86,6 @@
 @media(max-width : 300px){
     #question-comp {
         width : 100%;
-        margin-top: 50px;
     }
 }
 

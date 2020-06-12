@@ -33,23 +33,11 @@
 
 @media(max-width: 500px) {
     #quiz-header {
-        width: 80%;
-        height: 70px;
-    }
-
-    #quiz-name {
-        font-size: 22px;
-        width: 20%;
-    }
-}
-
-@media(max-width: 300px) {
-    #quiz-header {
         width: 100%;
         height: 50px;
         border-radius: 0;
     }
-
+    
     #quiz-name {
         display: none;
     }

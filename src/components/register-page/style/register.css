@@ -60,7 +60,7 @@ body {
     animation: spin 1.5s linear infinite;
     position: fixed;
     top: 40%;    
-    left: 40%;
+    left: 50%;
 }
 
 @keyframes spin {
@@ -114,6 +114,11 @@ body {
     .login-btn {
         font-size: 18px;
     }
+    
+    .loading {
+        left: 40%;
+    }
+
 }
 
 .fade-bg {

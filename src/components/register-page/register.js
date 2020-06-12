@@ -23,7 +23,7 @@ const Register = () => {
     const registerUser = async () => {
         setLoading(true)
         let newUser = { email, teamName, quizName }
-        await fetch("http://localhost:5000/api/client/login",{
+        await fetch("https://quiz-app-v1.herokuapp.com/api/client/login",{
             method : "POST",
             headers : {
                 'Accept': 'application/json',
@@ -35,7 +35,7 @@ const Register = () => {
         .then(res => res.json())
         .then(data => {
             setLoading(false)
-            console.log(data)
+            // console.log(data)
             let { token, error } = data 
             if (error) setErr(error)
             if (token) {
