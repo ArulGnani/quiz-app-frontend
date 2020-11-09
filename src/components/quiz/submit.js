@@ -50,9 +50,12 @@ function Submit () {
 
     const sendPoints = (points,certificate) => {
         let key = JSON.parse(sessionStorage.getItem("key"))
-        let res = JSON.stringify({"points" : points,"certificate" : certificate})
+        let res = JSON.stringify({"points" : points,"certificate" : false})
         if (key){
-            fetch("https://quiz-app-v1.herokuapp.com/api/client/send-result",{
+
+            let url = "https://quiz-app-v1.herokuapp.com/api/client/send-result"
+
+            fetch("http://localhost:5000/api/client/send-result",{
                 method : "POST",
                 headers : {
                     'Accept': 'application/json',
@@ -69,7 +72,9 @@ function Submit () {
                 if (data.error) {
                     swal("something went wrong!..","pls contact incharge","error")
                 } else {
-                    swal("submitted your answers successfully","check your email for certification...","success")
+                    swal("submitted your answers successfully",
+                         "contact your incharge.",
+                         "success")
                 }
             })
             .catch(err => {
