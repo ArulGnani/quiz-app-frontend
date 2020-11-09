@@ -53,9 +53,7 @@ function Submit () {
         let res = JSON.stringify({"points" : points,"certificate" : false})
         if (key){
 
-            let url = "https://quiz-app-v1.herokuapp.com/api/client/send-result"
-
-            fetch("http://localhost:5000/api/client/send-result",{
+            fetch("https://quiz-app-v1.herokuapp.com/api/client/send-result",{
                 method : "POST",
                 headers : {
                     'Accept': 'application/json',
